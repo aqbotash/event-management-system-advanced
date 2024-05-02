@@ -34,7 +34,7 @@ const EventList: React.FC = () => {
       console.log('response:', response.data);
       const modifiedResults = response.data.map((event: Event) => ({
         ...event,
-        img: decodeURIComponent(event.img).replace('https://event-management-system-front-d52ig2iqw-aqbotashs-projects.vercel.app/', ' ')
+        img: decodeURIComponent(event.img).replace('https://event-management-system-front-qda.vercel.app/', ' ')
       }));
       setEvents(modifiedResults);
       setFilteredEvents(modifiedResults.slice(0, pageSize));
