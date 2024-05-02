@@ -32,6 +32,7 @@ const EventList: React.FC = () => {
     try {
       const response = await axios.get<any>('http://localhost:8000/api/events/');
       console.log('response:', response.data);
+      console.log('response:', response.data[0].img);
       const modifiedResults = response.data.map((event: Event) => ({
         ...event,
         img: decodeURIComponent(event.img).replace('http://localhost:8000/', ' ')
@@ -98,7 +99,6 @@ const EventList: React.FC = () => {
           filteredEvents.map((event: any) => (
             <Link key={event.event_id} href={`/dashboard/${event.event_id}`} className="p-4 rounded-xl bg-custom-yellow cursor-pointer">
             <img src={event.img} alt={event.name} className="w-full h-48 object-cover rounded-md mb-2"/>
-            <h2 className="text-lg font-semibold">{event.img}</h2>
             <h2 className="text-lg font-semibold">{event.name}</h2>
             <p className="text-sm text-gray-500 mb-2">{event.address}</p>
             <p className="text-sm">{event.dates[0]?.date} - {event.dates[event.dates.length - 1]?.date}</p>
