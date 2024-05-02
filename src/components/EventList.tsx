@@ -1,11 +1,16 @@
 'use client'
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
+interface DateDetail {
+  date: string;
+}
 
 interface Event {
   event_id: number;
   name: string;
-  date: string | null;
+  dates: DateDetail[];
   address: string | null;
   description: string;
   img: string;
@@ -44,6 +49,12 @@ const EventList: React.FC = () => {
     filterEvents(event.target.value);
   };
 
+  const handlePageChange = (pageNumber: number) => {
+    const startIndex = (pageNumber - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    setFilteredEvents(events.slice(startIndex, endIndex));
+};
+
   const filterEvents = (query: string) => {
     const filtered = events.filter(event =>
       event.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -62,7 +73,7 @@ const EventList: React.FC = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Events</h1>
+      <div className="text-3xl font-bold p-8 mb-8 flex justify-center items-center">Events in Astana</div>
       {error && <p className="text-red-500">{error}</p>}
       <div className="mb-4">
         <input
@@ -76,19 +87,21 @@ const EventList: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {searchQuery ? (
           filteredEvents.map((event: any) => (
-            <div key={event.event_id} className="p-4 rounded-xl bg-custom-light-pink">
-              <img src={event.img} alt="Event" className="w-full h-48 object-cover rounded-md mb-2" />
-              <h2 className="text-lg font-semibold">{event.name}</h2>
-              <p className="text-sm text-gray-500 mb-2">{event.description}</p>
-            </div>
+            <Link key={event.event_id} href={`/dashboard/${event.event_id}`} className="p-4 rounded-xl bg-custom-yellow cursor-pointer">
+            <img src={event.img} alt={event.name} className="w-full h-48 object-cover rounded-md mb-2"/>
+            <h2 className="text-lg font-semibold">{event.name}</h2>
+            <p className="text-sm text-gray-500 mb-2">{event.address}</p>
+            <p className="text-sm">{event.dates[0]?.date} - {event.dates[event.dates.length - 1]?.date}</p>
+          </Link>
           ))
         ) : (
           filteredEvents.map((event: any) => (
-            <div key={event.event_id} className="p-4 rounded-xl bg-custom-light-pink">
-              <img src={event.img} alt="Event" className="w-full h-48 object-cover rounded-md mb-2" />
-              <h2 className="text-lg font-semibold">{event.name}</h2>
-              <p className="text-sm text-gray-500 mb-2">{event.description}</p>
-            </div>
+            <Link key={event.event_id} href={`/dashboard/${event.event_id}`} className="p-4 rounded-xl bg-custom-yellow cursor-pointer">
+            <img src={event.img} alt={event.name} className="w-full h-48 object-cover rounded-md mb-2"/>
+            <h2 className="text-lg font-semibold">{event.name}</h2>
+            <p className="text-sm text-gray-500 mb-2">{event.address}</p>
+            <p className="text-sm">{event.dates[0]?.date} - {event.dates[event.dates.length - 1]?.date}</p>
+          </Link>
           ))
         )}
       </div>
@@ -115,6 +128,7 @@ const EventList: React.FC = () => {
           ))
         )}
       </div>
+      <div className="mt-24 mb-24 flex items-center justify-center">with love by {'\u00a0'} <a href='https://github.com/aqbotash' className="text-blue-600"> aqbota </a> {'\u00a0'} for n!</div>
     </div>
   );
 };
