@@ -88,7 +88,7 @@ const EventList: React.FC = () => {
         {searchQuery ? (
           filteredEvents.map((event: any) => (
             <Link key={event.event_id} href={`/dashboard/${event.event_id}`} className="p-4 rounded-xl bg-custom-yellow cursor-pointer">
-            <img src={event.img.startsWith('/') ? event.img.slice(1) : event.img} className="w-full h-48 object-cover rounded-md mb-2"/>
+            <img src={event.img} className="w-full h-48 object-cover rounded-md mb-2"/>
             <h2 className="text-lg font-semibold">{event.name}</h2>
             <p className="text-sm text-gray-500 mb-2">{event.address}</p>
             <p className="text-sm">{event.dates[0]?.date} - {event.dates[event.dates.length - 1]?.date}</p>
@@ -97,7 +97,7 @@ const EventList: React.FC = () => {
         ) : (
           filteredEvents.map((event: any) => (
             <Link key={event.event_id} href={`/dashboard/${event.event_id}`} className="p-4 rounded-xl bg-custom-yellow cursor-pointer">
-            <img src={event.img.startsWith('/') ? event.img.slice(1):event.img} alt={event.name} className="w-full h-48 object-cover rounded-md mb-2"/>
+            <img src={event.img} alt={event.name} className="w-full h-48 object-cover rounded-md mb-2"/>
             <h2 className="text-lg font-semibold">{event.img}</h2>
             <h2 className="text-lg font-semibold">{event.name}</h2>
             <p className="text-sm text-gray-500 mb-2">{event.address}</p>
